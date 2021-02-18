@@ -6,7 +6,7 @@ import 'dart:convert';
 
 //http: ^0.12.0+2
 
-const request = "https://api.hgbrasil.com/finance";
+const request = "https://api.hgbrasil.com/finance?key=2ad66757";
 void main() {
   runApp(MaterialApp(
     home: Home(),
@@ -101,6 +101,14 @@ class _HomeState extends State<Home> {
                   child: Text("Erro ao carregar os dados...",
                       style: TextStyle(color: Colors.amber)),
                 );
+              } else if (!snapshot.data["valid_key"] &&
+                  snapshot.data["error"]) {
+                return Center(
+                    child: Text(
+                  "Problema ao obter dados! - " + snapshot.data["message"],
+                  style: TextStyle(color: Colors.amber),
+                  textAlign: TextAlign.center,
+                ));
               } else {
                 dolar = snapshot.data["results"]["currencies"]["USD"]["buy"];
                 euro = snapshot.data["results"]["currencies"]["EUR"]["buy"];
